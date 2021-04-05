@@ -77,8 +77,9 @@ public:
 	auto unified_ty = specified_ty->unify (init_expr_ty);
 	if (unified_ty->get_kind () == TyTy::TypeKind::ERROR)
 	  {
-	    rust_fatal_error (stmt.get_locus (),
-			      "failure in setting up let stmt type");
+	    context->insert_type (stmt.get_mappings (), specified_ty);
+	    rust_error_at (stmt.get_locus (),
+			   "failure in setting up let stmt type");
 	    return;
 	  }
 
